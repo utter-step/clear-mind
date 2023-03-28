@@ -5,7 +5,8 @@ use symphonia::core::{
     audio::{AudioBufferRef, Signal},
     codecs::{CodecParameters, Decoder, DecoderOptions, CODEC_TYPE_NULL},
     errors::Error as SymphError,
-    formats::FormatReader, io::{MediaSourceStream, ReadOnlySource},
+    formats::FormatReader,
+    io::{MediaSourceStream, ReadOnlySource},
 };
 
 pub struct SignalStream {

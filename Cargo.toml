@@ -13,6 +13,8 @@ color-eyre = "0.6.2"
 humantime = "2.1.0"
 ureq = "2.6.2"
 static_assertions = "1.1.0"
+rss = "2.0.3"
+url = "2.3.1"
 
 [profile.release]
 debug = true

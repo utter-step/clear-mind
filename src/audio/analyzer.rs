@@ -1,8 +1,11 @@
 use std::io::Read;
 
-use color_eyre::{Result, eyre::{ensure, eyre}};
+use color_eyre::{
+    eyre::{ensure, eyre},
+    Result,
+};
 use simple_moving_average::{SingleSumSMA, SMA};
-use static_assertions::{const_assert_eq};
+use static_assertions::const_assert_eq;
 
 use super::signal_stream::SignalStream;
 
@@ -34,13 +37,18 @@ pub struct GapInfo {
 /// Analyzes an audio stream and returns a list of gaps
 pub fn find_gaps(stream_reader: impl Read + Send + Sync + 'static) -> Result<Vec<GapInfo>> {
     let signal_stream = SignalStream::from_reader(stream_reader)?;
-    let codec_params = signal_stream.codec_params().ok_or_else(|| eyre!("codec params are unavailable"))?;
+    let codec_params = signal_stream
+        .codec_params()
+        .ok_or_else(|| eyre!("codec params are unavailable"))?;
 
     let sample_rate = codec_params
         .sample_rate
         .ok_or_else(|| eyre!("sample rate is not set"))?;
 
-    ensure!(sample_rate == 44100, "currently only 44.1kHz audio is supported");
+    ensure!(
+        sample_rate == 44100,
+        "currently only 44.1kHz audio is supported"
+    );
 
     let mean_signal = signal_stream
         .into_iter()
