@@ -1,0 +1,12 @@
+# MacOS specific files that are not needed for the project
+.DS_Store
+
+# cargo build artifacts
+/target
+
+# test audio files
+*.mp3
+
+# callgrind and cachegrind files
+callgrind.out.*
+cachegrind.out.*
