@@ -7,6 +7,8 @@ use color_eyre::{
 use simple_moving_average::{SingleSumSMA, SMA};
 use static_assertions::const_assert_eq;
 
+use crate::gap::GapInfo;
+
 use super::signal_stream::SignalStream;
 
 /// Fixed sample rate we're able to analyze.
@@ -14,25 +16,14 @@ use super::signal_stream::SignalStream;
 /// Currently, only 44.1kHz audio is supported
 const SUPPORTED_SAMPLE_RATE: usize = 44100;
 /// Window size in milliseconds
-const WINDOW_SIZE_MS: usize = 500;
+const WINDOW_SIZE_MS: usize = 700;
 /// How much samples fits in a window
 const WINDOW_SIZE_SAMPLES: usize = SUPPORTED_SAMPLE_RATE * WINDOW_SIZE_MS / 1000;
 
 const_assert_eq!(SUPPORTED_SAMPLE_RATE * WINDOW_SIZE_MS % 1000, 0);
 
 /// Audio signal cap, anything under it considered silence
-const SIGNAL_POWER_CAP: f64 = 0.00015;
-
-/// Info about gap
-#[derive(Debug, Clone, Copy)]
-pub struct GapInfo {
-    /// Start of a gap (sample index)
-    pub start: usize,
-    /// Length of a gap (in samples)
-    pub length: usize,
-    /// Sample rate per second
-    pub sample_rate: usize,
-}
+const SIGNAL_POWER_CAP: f64 = 0.0001;
 
 /// Analyzes an audio stream and returns a list of gaps
 pub fn find_gaps(stream_reader: impl Read + Send + Sync + 'static) -> Result<Vec<GapInfo>> {

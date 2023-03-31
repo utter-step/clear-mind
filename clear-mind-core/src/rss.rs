@@ -1,9 +1,6 @@
 use std::io::{self, BufReader};
 
-use color_eyre::{
-    eyre::{ensure, eyre},
-    Result,
-};
+use color_eyre::{eyre::eyre, Result};
 use url::Url;
 
 #[derive(Debug, Clone)]
@@ -14,14 +11,8 @@ pub struct Episode {
 
 /// Fetch podcast episodes from a RSS feed.
 ///
-/// Currently only Acast feeds are supported, however very little assumptions are made about the
-/// feed format, so it _may be_ easy to add support for other podcast providers.
+/// It is assumed that the episodes are attached as enclosures in RSS feed.
 pub fn fetch_episodes(url: &Url) -> Result<Vec<Episode>> {
-    ensure!(
-        matches!(url.host_str(), Some(host) if host.ends_with(".acast.com")),
-        "currently only Acast feeds are supported"
-    );
-
     let response = ureq::get(url.as_str()).call()?;
 
     fetch_episodes_from_stream(response.into_reader())

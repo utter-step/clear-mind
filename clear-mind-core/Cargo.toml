@@ -1,0 +1,20 @@
+[package]
+name = "clear-mind-core"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+symphonia = { version = "0.5.2", features = ["mp3"] }
+simple_moving_average = "0.1.2"
+color-eyre = "0.6.2"
+ureq = "2.6.2"
+static_assertions = "1.1.0"
+rss = "2.0.3"
+url = "2.3.1"
+itertools = "0.10.5"
+clap = { version = "4.2.1", features = ["derive"] }

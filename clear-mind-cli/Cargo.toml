@@ -1,0 +1,18 @@
+[package]
+name = "clear-mind"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clear-mind-core = { path = "../clear-mind-core" }
+
+clap = { version = "4.2.1", features = ["derive"] }
+color-eyre = "0.6.2"
+humantime = "2.1.0"
+ureq = "2.6.2"
+url = "2.3.1"
